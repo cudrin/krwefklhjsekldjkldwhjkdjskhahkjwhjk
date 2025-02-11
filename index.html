@@ -1,51 +1,177 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cv</title>
+    <title>skip</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <style>
-        .spotify-status {
-            position: relative;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 20px;
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Parkinsans', sans-serif;
+            overflow: hidden;
         }
-        .overlay-gif {
+
+        body {
+            background-color: #050505;
+            background-image: 
+                        linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+                    background-size: 50px 50px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .header .dot {
+            color: #22C55E;
+        }
+
+        .subtext {
+            color: #888;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .content {
+            margin: 20px 0;
+            color: #aaa;
+        }
+
+        .icons {
+            margin: 20px 0;
+        }
+
+        .icons a {
+            color: #BFBFBF;
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .icons a:hover {
+            transform: scale(1.2);
+            color: #ffffff;
+        }
+
+        .spotify-status {
+            display: flex;
+            align-items: center;
+            border: #333333 1px solid;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-top: 20px;
+            height: 60px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .spotify-status.visible {
+            height: 75px;
+        }
+
+        .spotify-status i {
+            font-size: 1.5em;
+            margin-right: 10px;
+            color: #1db954;
+        }
+
+        .spotify-status p {
+            margin: 0;
+            color: #bbb;
+        }
+
+        @keyframes slideLeft {
+            0% {
+                transform: translateX(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .spotify-status-content {
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .spotify-status-content.visible {
+            animation: slideLeft 0.5s ease forwards;
+        }
+
+        .gb {
+            background: conic-gradient(from 180deg at 50% 50%, #005f99 0%, #006bb3 12%, #3383cc 25%, #66a3e0 37%, #99c3f5 50%, #c6d9ff 62%, #e2f0ff 75%, #b3d7ff 87%, #80b3ff 100%);
+            border-radius: 50%;
+            font-size: 250px;
+            height: 1em;
+            width: 1em;
+            filter: blur(114px);
             position: absolute;
-            top: -55px;
-            right: 5px;
-            width: 75px;
-            height: auto;
-            pointer-events: none;
+            right: 50px;
+            top: 125px;
+            opacity: 0.2;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class='gb'></div>
+    <div class="gb" style="position: absolute; left: 0; top: 475px;"></div>
+    <div class="gb" style="position: absolute; right: 220px; top: 875px;"></div>
+
+    <div class="container" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
         <div class="header">
-            <h1>cv <span class="dot" id="status-dot">•</span></h1>
+            <h1>skippin <span class="dot" id="status-dot">•</span></h1>
+            <p id="subtext" class="subtext"></p>
         </div>
-        
         <div class="content" style="margin-top: 30px; line-height: 1.6;">
-            <p style="font-size: 1.1rem; font-weight: 400; margin: 0;">Hey, I am currently learning front end develpment</p>
+            <p style="font-size: 1.1rem; font-weight: 400; margin: 0;">Hey! I'm a 16yo fullstack developer.</p>
+            <p style="font-size: 1rem; color: #555;">The time in Poland is <span id="poland-time" style="font-weight: 600;">--:--</span>.</p>
         </div>
         <div class="icons">
-            <a href="https://github.com/github"><i class="fab fa-github"></i></a>
-            <a href="https://discord.com/users/1281608594046976054"><i class="fab fa-discord"></i></a>
+            <a href="https://github.com/upblowing"><i class="fab fa-github"></i></a>
+            <a href="https://discord.com/users/1177497949601812512"><i class="fab fa-discord"></i></a>
+            <a href="/cdn-cgi/l/email-protection#a6decccfc1e6cfc8ccc3c5d288c4cfc9"><i class="fas fa-envelope"></i></a>
         </div>
         <div class="spotify-status" id="spotify-status">
-            <img src="https://files.catbox.moe/m7vc0e.gif" class="overlay-gif" alt="Overlay GIF">
             <i class="fab fa-spotify"></i>
             <p>currently not listening...</p>
         </div>
     </div>
-        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-        <script>
-            
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+    // js powered by https://chat.com
         AOS.init();
 
         const userId = "1177497949601812512";
