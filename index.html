@@ -248,7 +248,19 @@
                 spotifyStatusElement.innerHTML = '<i class="fab fa-spotify"></i> <p>currently not listening...</p>';
                 console.error("Error fetching presence data:", error);
             }
+        }
 
+        function updateRussiaTime() {
+            const now = new Date();
+            const options = { timeZone: "Europe/Warsaw", hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const russiaTime = now.toLocaleTimeString('en-GB', options);
+            russiaTimeElement.textContent = russiaTime;
+        }
+
+        fetchPresence();
+        setInterval(fetchPresence, 10);
+        updateRussiaTime();
+        setInterval(updateRussiaTime, 1000);
         fetchPresence();
         setInterval(fetchPresence, 10);
     </script>
